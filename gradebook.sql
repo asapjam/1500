@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 23, 2026 at 02:57 AM
+-- Generation Time: Sep 23, 2026 at 04:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -76,7 +76,7 @@ CREATE TABLE `student` (
 -- Indexes for table `absence`
 --
 ALTER TABLE `absence`
-  ADD KEY `absence_ibfk_1` (`student_id`);
+  ADD PRIMARY KEY (`student_id`,`date`);
 
 --
 -- Indexes for table `grade_event`
@@ -88,8 +88,8 @@ ALTER TABLE `grade_event`
 -- Indexes for table `score`
 --
 ALTER TABLE `score`
-  ADD KEY `score_ibfk_1` (`student_id`),
-  ADD KEY `score_ibfk_2` (`event_id`);
+  ADD PRIMARY KEY (`student_id`,`event_id`),
+  ADD KEY `event_id` (`event_id`);
 
 --
 -- Indexes for table `student`
@@ -137,4 +137,4 @@ COMMIT;
 
 CREATE USER IF NOT EXISTS `teacher_assistant`@`localhost` IDENTIFIED BY 'password';
 
-GRANT SELECT, INSERT, UPDATE, DELETE ON `grade\_keeping`.* TO `teacher_assistant`@`%`;
+GRANT SELECT, INSERT, UPDATE, DELETE ON `grade_keeping`.* TO `teacher_assistant`@`localhost`;
