@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 23, 2026 at 04:05 AM
+-- Generation Time: Sep 24, 2026 at 03:02 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,41 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `absence`
---
-
-CREATE TABLE `absence` (
-  `student_id` int(10) UNSIGNED NOT NULL,
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `grade_event`
---
-
-CREATE TABLE `grade_event` (
-  `event_id` int(10) UNSIGNED NOT NULL,
-  `date` date NOT NULL,
-  `category` enum('T','Q') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `score`
---
-
-CREATE TABLE `score` (
-  `student_id` int(10) UNSIGNED NOT NULL,
-  `event_id` int(10) UNSIGNED NOT NULL,
-  `score` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `student`
 --
 
@@ -69,27 +34,44 @@ CREATE TABLE `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`student_id`, `name`, `sex`) VALUES
+(1, 'Megan', 'F'),
+(2, 'Joseph', 'M'),
+(3, 'Kyle', 'M'),
+(4, 'Katie', 'F'),
+(5, 'Abby', 'F'),
+(6, 'Nathan', 'M'),
+(7, 'Leslie', 'F'),
+(8, 'Ian', 'M'),
+(9, 'Colin', 'M'),
+(10, 'Peter', 'M'),
+(11, 'Michael', 'M'),
+(12, 'Thomas', 'M'),
+(13, 'Devri', 'F'),
+(14, 'Ben', 'M'),
+(15, 'Aubrey', 'F'),
+(16, 'Rebecca', 'F'),
+(18, 'Max', 'M'),
+(19, 'Rianne', 'F'),
+(20, 'Avery', 'M'),
+(21, 'Lauren', 'F'),
+(22, 'Becca', 'F'),
+(23, 'Gregory', 'M'),
+(24, 'Sarah', 'F'),
+(25, 'Robbie', 'M'),
+(26, 'Keaton', 'M'),
+(27, 'Carter', 'M'),
+(28, 'Teddy', 'M'),
+(29, 'Gabrielle', 'F'),
+(30, 'Grace', 'F'),
+(31, 'Emily', 'F');
+
+--
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `absence`
---
-ALTER TABLE `absence`
-  ADD PRIMARY KEY (`student_id`,`date`);
-
---
--- Indexes for table `grade_event`
---
-ALTER TABLE `grade_event`
-  ADD PRIMARY KEY (`event_id`);
-
---
--- Indexes for table `score`
---
-ALTER TABLE `score`
-  ADD PRIMARY KEY (`student_id`,`event_id`),
-  ADD KEY `event_id` (`event_id`);
 
 --
 -- Indexes for table `student`
@@ -102,39 +84,12 @@ ALTER TABLE `student`
 --
 
 --
--- AUTO_INCREMENT for table `grade_event`
---
-ALTER TABLE `grade_event`
-  MODIFY `event_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `absence`
---
-ALTER TABLE `absence`
-  ADD CONSTRAINT `absence_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`);
-
---
--- Constraints for table `score`
---
-ALTER TABLE `score`
-  ADD CONSTRAINT `score_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`),
-  ADD CONSTRAINT `score_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `grade_event` (`event_id`);
+  MODIFY `student_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-CREATE USER IF NOT EXISTS `teacher_assistant`@`localhost` IDENTIFIED BY 'password';
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON `grade_keeping`.* TO `teacher_assistant`@`localhost`;
