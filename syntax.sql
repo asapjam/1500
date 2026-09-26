@@ -265,3 +265,22 @@ FROM movies_basic2
 WHERE title
 LIKE "Agent%";
 
+-- GROUP BY
+SELECT title, director, MAX(critics_rating)
+FROM movies_basic2
+GROUP BY director
+ORDER BY NULL;
+
+-- GROUP CONCAT
+SELECT director, GROUP_CONCAT(title SEPERATOR " , ")
+FROM movies_basic2
+GROUP BY director
+ORDER BY NULL;
+
+-- HAVING
+SELECT director, COUNT(title)
+FROM movies_basic2
+WHERE director != "Stuart Scott"
+GROUP BY director
+HAVING COUNT(title) > 1
+ORDER BY NULL;
