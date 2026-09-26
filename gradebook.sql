@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2026 at 03:02 AM
+-- Generation Time: Sep 24, 2026 at 02:45 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,244 @@ SET time_zone = "+00:00";
 --
 -- Database: `grade_keeping`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `absence`
+--
+
+CREATE TABLE `absence` (
+  `student_id` int(10) UNSIGNED NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `absence`
+--
+
+INSERT INTO `absence` (`student_id`, `date`) VALUES
+(3, '2012-09-03'),
+(5, '2012-09-03'),
+(10, '2012-09-06'),
+(10, '2012-09-09'),
+(17, '2012-09-07'),
+(20, '2012-09-07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `grade_event`
+--
+
+CREATE TABLE `grade_event` (
+  `event_id` int(10) UNSIGNED NOT NULL,
+  `date` date NOT NULL,
+  `category` enum('T','Q') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `grade_event`
+--
+
+INSERT INTO `grade_event` (`event_id`, `date`, `category`) VALUES
+(1, '2012-09-03', 'Q'),
+(2, '2012-09-06', 'Q'),
+(3, '2012-09-09', 'T'),
+(4, '2012-09-16', 'Q'),
+(5, '2012-09-23', 'Q'),
+(6, '2012-10-01', 'T');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `score`
+--
+
+CREATE TABLE `score` (
+  `student_id` int(10) UNSIGNED NOT NULL,
+  `event_id` int(10) UNSIGNED NOT NULL,
+  `score` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `score`
+--
+
+INSERT INTO `score` (`student_id`, `event_id`, `score`) VALUES
+(1, 1, 20),
+(1, 2, 17),
+(1, 3, 88),
+(1, 5, 15),
+(1, 6, 100),
+(2, 2, 8),
+(2, 3, 84),
+(2, 4, 7),
+(2, 5, 12),
+(2, 6, 91),
+(3, 1, 20),
+(3, 2, 13),
+(3, 3, 69),
+(3, 4, 17),
+(3, 5, 11),
+(3, 6, 94),
+(4, 1, 18),
+(4, 2, 13),
+(4, 3, 71),
+(4, 4, 16),
+(4, 6, 74),
+(5, 1, 13),
+(5, 2, 17),
+(5, 3, 97),
+(5, 4, 20),
+(5, 5, 13),
+(5, 6, 97),
+(6, 1, 18),
+(6, 2, 13),
+(6, 3, 83),
+(6, 4, 9),
+(6, 5, 18),
+(6, 6, 89),
+(7, 1, 14),
+(7, 2, 17),
+(7, 3, 88),
+(7, 4, 19),
+(7, 5, 14),
+(7, 6, 76),
+(8, 1, 14),
+(8, 2, 8),
+(8, 3, 75),
+(8, 4, 12),
+(8, 5, 18),
+(8, 6, 65),
+(9, 1, 11),
+(9, 2, 19),
+(9, 3, 83),
+(9, 4, 17),
+(9, 5, 13),
+(9, 6, 73),
+(10, 1, 19),
+(10, 2, 18),
+(10, 3, 72),
+(10, 4, 12),
+(10, 5, 14),
+(10, 6, 63),
+(11, 1, 18),
+(11, 2, 15),
+(11, 3, 74),
+(11, 4, 16),
+(11, 5, 18),
+(11, 6, 98),
+(12, 1, 19),
+(12, 2, 19),
+(12, 3, 77),
+(12, 4, 13),
+(12, 5, 8),
+(12, 6, 75),
+(13, 2, 18),
+(13, 3, 67),
+(13, 4, 8),
+(13, 5, 8),
+(14, 1, 11),
+(14, 2, 18),
+(14, 3, 68),
+(14, 4, 11),
+(14, 5, 16),
+(14, 6, 77),
+(15, 1, 20),
+(15, 2, 16),
+(15, 3, 75),
+(15, 4, 9),
+(15, 5, 13),
+(15, 6, 62),
+(16, 1, 18),
+(16, 2, 9),
+(16, 3, 60),
+(16, 4, 20),
+(16, 5, 15),
+(16, 6, 98),
+(17, 1, 9),
+(17, 2, 13),
+(17, 3, 79),
+(17, 5, 11),
+(17, 6, 94),
+(18, 1, 20),
+(18, 2, 9),
+(18, 3, 96),
+(18, 4, 11),
+(18, 5, 18),
+(18, 6, 94),
+(19, 1, 9),
+(19, 2, 11),
+(19, 3, 79),
+(19, 4, 15),
+(19, 5, 18),
+(19, 6, 74),
+(20, 1, 9),
+(20, 3, 76),
+(20, 4, 17),
+(20, 5, 14),
+(20, 6, 62),
+(21, 1, 13),
+(21, 2, 12),
+(21, 3, 91),
+(21, 4, 13),
+(21, 5, 17),
+(21, 6, 73),
+(22, 1, 13),
+(22, 2, 10),
+(22, 3, 81),
+(22, 4, 20),
+(22, 5, 17),
+(22, 6, 95),
+(23, 1, 16),
+(23, 2, 17),
+(23, 3, 81),
+(23, 4, 13),
+(23, 5, 15),
+(24, 1, 11),
+(24, 2, 19),
+(24, 3, 62),
+(24, 4, 12),
+(24, 6, 68),
+(25, 1, 19),
+(25, 2, 10),
+(25, 3, 79),
+(25, 4, 10),
+(25, 5, 14),
+(25, 6, 85),
+(26, 1, 10),
+(26, 2, 18),
+(26, 3, 86),
+(26, 4, 15),
+(26, 5, 8),
+(26, 6, 91),
+(27, 1, 15),
+(27, 2, 8),
+(27, 3, 90),
+(27, 6, 70),
+(28, 1, 15),
+(28, 2, 13),
+(28, 3, 68),
+(28, 4, 17),
+(28, 5, 20),
+(28, 6, 77),
+(29, 1, 19),
+(29, 2, 16),
+(29, 3, 66),
+(29, 5, 16),
+(29, 6, 66),
+(30, 1, 17),
+(30, 2, 12),
+(30, 3, 79),
+(30, 4, 11),
+(30, 6, 68),
+(31, 1, 11),
+(31, 2, 19),
+(31, 3, 81),
+(31, 4, 19),
+(31, 5, 9),
+(31, 6, 76);
 
 -- --------------------------------------------------------
 
@@ -44,7 +282,7 @@ INSERT INTO `student` (`student_id`, `name`, `sex`) VALUES
 (4, 'Katie', 'F'),
 (5, 'Abby', 'F'),
 (6, 'Nathan', 'M'),
-(7, 'Leslie', 'F'),
+(7, 'Liesl', 'F'),
 (8, 'Ian', 'M'),
 (9, 'Colin', 'M'),
 (10, 'Peter', 'M'),
@@ -54,9 +292,10 @@ INSERT INTO `student` (`student_id`, `name`, `sex`) VALUES
 (14, 'Ben', 'M'),
 (15, 'Aubrey', 'F'),
 (16, 'Rebecca', 'F'),
+(17, 'Will', 'M'),
 (18, 'Max', 'M'),
 (19, 'Rianne', 'F'),
-(20, 'Avery', 'M'),
+(20, 'Avery', 'F'),
 (21, 'Lauren', 'F'),
 (22, 'Becca', 'F'),
 (23, 'Gregory', 'M'),
@@ -74,6 +313,25 @@ INSERT INTO `student` (`student_id`, `name`, `sex`) VALUES
 --
 
 --
+-- Indexes for table `absence`
+--
+ALTER TABLE `absence`
+  ADD PRIMARY KEY (`student_id`,`date`);
+
+--
+-- Indexes for table `grade_event`
+--
+ALTER TABLE `grade_event`
+  ADD PRIMARY KEY (`event_id`);
+
+--
+-- Indexes for table `score`
+--
+ALTER TABLE `score`
+  ADD PRIMARY KEY (`student_id`,`event_id`),
+  ADD KEY `event_id` (`event_id`);
+
+--
 -- Indexes for table `student`
 --
 ALTER TABLE `student`
@@ -84,10 +342,33 @@ ALTER TABLE `student`
 --
 
 --
+-- AUTO_INCREMENT for table `grade_event`
+--
+ALTER TABLE `grade_event`
+  MODIFY `event_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
   MODIFY `student_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `absence`
+--
+ALTER TABLE `absence`
+  ADD CONSTRAINT `absence_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`);
+
+--
+-- Constraints for table `score`
+--
+ALTER TABLE `score`
+  ADD CONSTRAINT `score_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`),
+  ADD CONSTRAINT `score_ibfk_2` FOREIGN KEY (`event_id`) REFERENCES `grade_event` (`event_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

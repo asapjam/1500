@@ -284,3 +284,111 @@ WHERE director != "Stuart Scott"
 GROUP BY director
 HAVING COUNT(title) > 1
 ORDER BY NULL;
+
+-- IS NULL / IS NOT NULL
+
+-- SUBSELECTS -----------------------------------------------------------------------------------------------------------------------------------------
+
+-- UNCORRELATED (INNER QUERY DOESNT RELY ON OUTER QUERY FOR DATA)
+SELECT *
+FROM titles
+WHERE id = (
+    SELECT titles_id
+    FROM critic_rating
+    WHERE critic_rating.critics_rating = 5.5
+);
+
+SELECT *
+FROM critics_rating
+WHERE critics_rating > (
+    SELECT AVG(critics_rating)
+    FROM critic_rating
+);
+
+SELECT *
+FROM titles
+WHERE id
+IN (
+    SELECT title_id
+    FROM critics_rating
+    WHERE critics_rating > (
+        SELECT AVG(critics_rating)
+        FROM critic_rating
+    )
+);
+
+-- COMPARISON OPERATOR DEPENDENT --
+
+-- ALL () --
+-- TRUE IF COMPARISON VALUE IS (GREATER THAN OR EQUAL TO) EVERY VALUE THE SUBSELECT RETURNS
+SELECT *
+FROM movies_basic
+WHERE critics_rating >=
+ALL (
+    SELECT critics_rating
+    FROM movies_basic
+);
+
+-- ANY () / SOME () --
+-- TRUE IF COMPARISON VALUE IS (GREATER THAN OR EQUAL TO) ANY VALUE THE SUBSELECT RETURNS
+SELECT *
+FROM movies_basic
+WHERE critics_rating >=
+ANY (
+    SELECT critics_rating
+    FROM movies_basic
+);
+
+SELECT *
+FROM movies_basic
+WHERE (director, critics_rating) =
+ANY (
+    SELECT director, critics_rating
+    FROM movies_basic
+    WHERE critcs_rating > 8
+);
+
+--  CORRELATED SUBQUERY --
+
+-- EXISTS / NOT EXISTS --
+SELECT *
+FROM titles
+WHERE EXISTS (
+    SELECT *
+    FROM posters
+    WHERE titles.id = posters.titles_id
+);
+
+SELECT *
+FROM titles
+WHERE NOT EXISTS (
+    SELECT *
+    FROM posters
+    WHERE titles.id = posters.titles_id
+);
+
+-- ALIAS --
+SELECT title, critics_rating
+FROM movies_basic,
+(
+    SELECT AVG(critics_rating)
+    AS ar
+    FROM movies_basic
+)
+AS cr
+WHERE movies_basic.critics_rating > cr.ar;
+
+-- REWRITE SUBSELECT AS JOIN --
+SELECT *
+FROM titles
+WHERE titles.id NOT IN (
+    SELECT posters.titles_id
+    FROM posters
+);
+
+SELECT titles.*
+FROM titles
+OUTER JOIN posters
+ON titles.id = posters.title_id
+WHERE posters.titles_id
+IS NULL;
