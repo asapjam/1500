@@ -392,3 +392,57 @@ OUTER JOIN posters
 ON titles.id = posters.title_id
 WHERE posters.titles_id
 IS NULL;
+
+-- PROCEDURES AND FUNCTIONS -------------------------------------------------------
+
+-- CREATE PROCEDURE --
+-- MUST CHANGE DELIMITER FIELD IN MYPHPADMIN TO //
+CREATE PROCEDURE sp_get_all_students() 
+BEGIN 
+    SELECT id, name, sex 
+    FROM student; 
+END//
+
+-- CREATE PROCEDURE WITH PARAMS
+
+CREATE PROCEDURE sp_student_info( 
+    IN REQUESTED_STUDENT_ID INT 
+) 
+BEGIN 
+    SELECT name, sex 
+    FROM student 
+    WHERE student_id = REQUESTED_STUDENT_ID; 
+END//
+
+-- CALL PROCEDURE --
+CALL sp_get_all_students();
+
+-- CALL PROCEDURE WITH PARAMS --
+CALL sp_student_info(1); 
+
+-- SET/GET VARIABLES --
+SET @avg_score = (SELECT AVG(score) FROM score);
+SELECT @avg_score;
+
+-- CASE --
+CREATE PROCEDURE sp_student_calculate_grade(
+	IN REQUESTED_STUDENT_ID INT
+)
+BEGIN
+  	DECLARE avg_score INT DEFAULT 1;
+  	SET avg_score = (SELECT AVG(score) FROM score WHERE student_id = REQUESTED_STUDENT_ID);
+    SELECT name, sex, SUM(score.score), avg_score, (
+        SELECT 
+            CASE avg_score 
+                WHEN avg_score > 90 THEN "A"
+                WHEN avg_score > 80 THEN "B"
+                WHEN avg_score > 70 THEN "C"
+                WHEN avg_score > 60 THEN "D"
+                ELSE "F"
+            END
+    ) AS letter_grade
+	FROM student 
+    INNER JOIN score
+    ON score.student_id = student.student_id
+    WHERE student.student_id = REQUESTED_STUDENT_ID;
+END//
