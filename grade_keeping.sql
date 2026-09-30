@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2026 at 03:57 AM
+-- Generation Time: Sep 30, 2026 at 05:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -32,20 +32,29 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_student_calculate_grade` (IN `REQUESTED_STUDENT_ID` INT)   BEGIN
     DECLARE average_score DOUBLE DEFAULT 1;
+    DECLARE total_score DECIMAL(5,2);
     DECLARE letter_grade VARCHAR(1);
+
     SET average_score = (SELECT AVG(score) FROM score WHERE student_id = REQUESTED_STUDENT_ID);
+    SET total_score = (SELECT ROUND(SUM(score.score), 2) FROM score WHERE student_id = REQUESTED_STUDENT_ID);
     SET letter_grade = (
         SELECT 
             CASE
-                WHEN average_score > 10 THEN "A"
+                WHEN ((total_score / 280) * 100) >= 90 THEN "A"
+                WHEN ((total_score / 280) * 100) >= 80 THEN "B"
+                WHEN ((total_score / 280) * 100) >= 70 THEN "C"
+                WHEN ((total_score / 280) * 100) >= 60 THEN "D"
                 ELSE "F"
             END
     );
-    SELECT name, sex, ROUND(SUM(score.score), 2) AS total_score, ROUND(average_score, 2) AS "average_score", letter_grade
+    SET average_score = FORMAT(average_score, 2, 'en-us');
+
+    SELECT name AS student_name, sex AS "sex ", ROUND(total_score, 2) AS "total_score", average_score, letter_grade
     FROM student 
     INNER JOIN score
     ON score.student_id = student.student_id
-    WHERE student.student_id = REQUESTED_STUDENT_ID;
+    WHERE student.student_id = REQUESTED_STUDENT_ID
+    GROUP BY student.student_id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_student_info` (IN `REQUESTED_STUDENT_ID` INT)   BEGIN 
