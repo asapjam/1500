@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2026 at 03:31 AM
+-- Generation Time: Sep 30, 2026 at 02:29 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `northwind`
 --
+
+DELIMITER $$
+--
+-- Functions
+--
+CREATE DEFINER=`root`@`localhost` FUNCTION `udf_add_dollar_sign` (`dollar_amount` DOUBLE) RETURNS VARCHAR(99) CHARSET utf8mb4 COLLATE utf8mb4_general_ci DETERMINISTIC BEGIN
+    DECLARE temp VARCHAR(99);
+    SET temp = FORMAT(dollar_amount, 2, 'en-us');
+    SET temp = CONCAT("$", temp);
+    RETURN (SELECT temp);
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 

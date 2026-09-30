@@ -399,7 +399,7 @@ IS NULL;
 -- MUST CHANGE DELIMITER FIELD IN MYPHPADMIN TO //
 CREATE PROCEDURE sp_get_all_students() 
 BEGIN 
-    SELECT id, name, sex 
+    SELECT student_id, name, sex 
     FROM student; 
 END//
 
@@ -420,29 +420,67 @@ CALL sp_get_all_students();
 -- CALL PROCEDURE WITH PARAMS --
 CALL sp_student_info(1); 
 
--- SET/GET VARIABLES --
+-- SET/GET VARIABLES OUTSIDE OF PROCEDURE --
 SET @avg_score = (SELECT AVG(score) FROM score);
 SELECT @avg_score;
 
+-- SET/GET VARIABLES INSIDE OF PROCEDURE --
+DECLARE letter_grade VARCHAR(1);
+SET avg_score = (SELECT AVG(score) FROM score WHERE student_id = REQUESTED_STUDENT_ID);
+
 -- CASE --
+
+--divide by toal number of points multiply * 100
 CREATE PROCEDURE sp_student_calculate_grade(
-	IN REQUESTED_STUDENT_ID INT
+    IN REQUESTED_STUDENT_ID INT
 )
 BEGIN
-  	DECLARE avg_score INT DEFAULT 1;
-  	SET avg_score = (SELECT AVG(score) FROM score WHERE student_id = REQUESTED_STUDENT_ID);
-    SELECT name, sex, SUM(score.score), avg_score, (
+    DECLARE average_score DOUBLE DEFAULT 1;
+    DECLARE letter_grade VARCHAR(1);
+    SET average_score = (SELECT AVG(score) FROM score WHERE student_id = REQUESTED_STUDENT_ID);
+    SET letter_grade = (
         SELECT 
-            CASE avg_score 
-                WHEN avg_score > 90 THEN "A"
-                WHEN avg_score > 80 THEN "B"
-                WHEN avg_score > 70 THEN "C"
-                WHEN avg_score > 60 THEN "D"
+            CASE
+                WHEN average_score > 90 THEN "A"
+                WHEN average_score > 80 THEN "B"
+                WHEN average_score > 70 THEN "C"
+                WHEN average_score > 60 THEN "D"
                 ELSE "F"
             END
-    ) AS letter_grade
-	FROM student 
+    );
+    SELECT name, sex, ROUND(SUM(score.score), 2) AS total_score, ROUND(average_score, 2) AS "average_score", letter_grade
+    FROM student 
     INNER JOIN score
     ON score.student_id = student.student_id
     WHERE student.student_id = REQUESTED_STUDENT_ID;
+END//
+
+
+-- CREATE FUNCTION --
+CREATE FUNCTION udf_convert_fahrenheit_celsius(
+    input_temperature DOUBLE
+)
+RETURNS VARCHAR(10)
+DETERMINISTIC
+BEGIN
+    DECLARE temp DOUBLE;
+    DECLARE stringtemp VARCHAR(10);
+    SET temp = input_temperature - 32;
+    SET temp = temp * 5;
+    SET temp = temp / 9;
+    SET stringtemp = ROUND(temp, 1);
+    SET stringtemp = FORMAT(temp, 1, 'en-us');
+    RETURN (SELECT CONCAT(stringtemp, "° C"));
+END//
+
+CREATE FUNCTION udf_add_dollar_sign(
+    dollar_amount DOUBLE
+)
+RETURNS VARCHAR(99)
+DETERMINISTIC
+BEGIN
+    DECLARE temp VARCHAR(99);
+    SET temp = FORMAT(dollar_amount, 2, 'en-us');
+    SET temp = CONCAT("$", temp);
+    RETURN (SELECT temp);
 END//
