@@ -8,11 +8,11 @@ Users table values
 
 UserInfo table values - You need the userID from the users table
 
-	(1, "Evangeline", "Voss", "Winchester", "MA", 22638, "steevesecurity@AnarchyPsych.com", "2010-12-09")
-	(2, "Gabriel", "Salizar", "El Paso", "TX", 79906, "nyeexchange@GnomeSpyder.com", "2005-05-28")
-	(3, "Kurt", "Faust", "Chatham", "VA", 24531, "piperiches@Jewelix.com", "2016-03-15")
-	(4, "Leonardo", "Tobin", "Lake Placid", "NY", 12946, "frightenedaudi@Scannerwa.com", "2021-01-21")
-	(5, "Ruby", "Frost", "Topinabee", "MI", 49791, "behavejavelin@Bluewo.com", "2014-07-07")
+	(1, "Evangeline", "Voss", "Winchester", "MA", 22638, "steevesecurity@AnarchyPsych.com", "2010-12-09"),
+	(2, "Gabriel", "Salizar", "El Paso", "TX", 79906, "nyeexchange@GnomeSpyder.com", "2005-05-28"),
+	(3, "Kurt", "Faust", "Chatham", "VA", 24531, "piperiches@Jewelix.com", "2016-03-15"),
+	(4, "Leonardo", "Tobin", "Lake Placid", "NY", 12946, "frightenedaudi@Scannerwa.com", "2021-01-21"),
+	(5, "Ruby", "Frost", "Topinabee", "MI", 49791, "behavejavelin@Bluewo.com", "2014-07-07");
 
 Graveyards table values
 
@@ -25,7 +25,7 @@ Graveyards table values
 Graves table values - You need the graveyardID from the graveyard table
 
 	("Alfred", "P", "Kafka", "1923-11-24", "1943-09-21", 1, 0, "kafka.jpg", "42.45.23", "-71.1370", 29.53, 1, 1),
-	("Merv", , "Griffin", "1925-07-06", "2007-08-12", 0, 1, "griffin.png", "31.760107040", "-106.492294312", 3750.00, 2, 2),
+	("Merv", "", "Griffin", "1925-07-06", "2007-08-12", 0, 1, "griffin.png", "31.760107040", "-106.492294312", 3750.00, 2, 2),
 	("Joel", "H", "Cheskin", "1942-07-23", "2014-02-05", 0, 0, "cheskin.jpg", "36.822467804", "-79.397003174", 715.22, 3, 3),
 	("Ruth", "E", "Brannen", "1907-04-16", "1907-06-18", 0, 0, "brannen.jpg", "44.282329559", "-73.982955933", 1850.39, 4, 4),
 	("Steve", "J", "Ireland", "1931-09-01", "2001-07-07", 0, 0, "ireland.png", "45.483539581", "-84.593986511", 613.52, 5, 5);
@@ -67,7 +67,7 @@ UserPermission table values - You will need the userIDs from the users table
 
 Groups table values
 
-	("WW2 Enthusiasts", "We are interested in finding and cataloging the graves of veterans of World War II.", 2)
+	("WW2 Enthusiasts", "We are interested in finding and cataloging the graves of veterans of World War II.", 2),
 	("Star Search", "We want to find where famous people are buried.", 4);
 
 
@@ -75,6 +75,11 @@ groupMembers table values - You will need the groupID from the groupps table and
 
 	(1, 1, 2, 3),
 	(2, 3, 4, 5);
+
+//REVISE?
+
+	(1,1), (1,2), (1,3),
+	(2,3), (2,4), (2,5);
 
 Messages table values - You will need the userIDs from the users table
 
