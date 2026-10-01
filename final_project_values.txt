@@ -1,0 +1,104 @@
+Users table values
+
+	("steevesecurity", "PSychiCs"),
+	("nyeexchange", "neurOIsT"),
+	("piperiches", "scopEant"),
+	("frightenedaudi", "aquaIous"),
+	("behavejavelin", "ManiMent");
+
+UserInfo table values - You need the userID from the users table
+
+	(1, "Evangeline", "Voss", "Winchester", "MA", 22638, "steevesecurity@AnarchyPsych.com", "2010-12-09")
+	(2, "Gabriel", "Salizar", "El Paso", "TX", 79906, "nyeexchange@GnomeSpyder.com", "2005-05-28")
+	(3, "Kurt", "Faust", "Chatham", "VA", 24531, "piperiches@Jewelix.com", "2016-03-15")
+	(4, "Leonardo", "Tobin", "Lake Placid", "NY", 12946, "frightenedaudi@Scannerwa.com", "2021-01-21")
+	(5, "Ruby", "Frost", "Topinabee", "MI", 49791, "behavejavelin@Bluewo.com", "2014-07-07")
+
+Graveyards table values
+
+	("Old Forest Cemetery", "1476  Meadowview Drive", "Winchester", "VA", "22638", "540-858-3666", 1),
+	("Glory Gardens", "1406  Frederick Street", "El Paso", "TX", "79906", "915-873-7820", 2),
+	("Ashvale Mausoleum", "1413  Worley Avenue", "Chatham", "VA", "24531", "434-432-6748", 3),
+	("Eden Cemetery", "4943  Hardesty Street", "Lake Placid", "NY", "12946", "518-523-9837", 4),
+	("Peace of Mind Memorial Park", "1978  Glenview Drive", "Topinabee", "MI", "49791", "361-570-6290", 5);
+
+Graves table values - You need the graveyardID from the graveyard table
+
+	("Alfred", "P", "Kafka", "1923-11-24", "1943-09-21", 1, 0, "kafka.jpg", "42.45.23", "-71.1370", 29.53, 1, 1),
+	("Merv", , "Griffin", "1925-07-06", "2007-08-12", 0, 1, "griffin.png", "31.760107040", "-106.492294312", 3750.00, 2, 2),
+	("Joel", "H", "Cheskin", "1942-07-23", "2014-02-05", 0, 0, "cheskin.jpg", "36.822467804", "-79.397003174", 715.22, 3, 3),
+	("Ruth", "E", "Brannen", "1907-04-16", "1907-06-18", 0, 0, "brannen.jpg", "44.282329559", "-73.982955933", 1850.39, 4, 4),
+	("Steve", "J", "Ireland", "1931-09-01", "2001-07-07", 0, 0, "ireland.png", "45.483539581", "-84.593986511", 613.52, 5, 5);
+
+Friends table values - You will need the userIDs from the users table
+
+	(1, 3),
+	(1, 5),
+	(2, 5),
+	(2, 4),
+	(3, 1),
+	(3, 4),
+	(4, 2),
+	(4, 3),
+	(5, 1),
+	(5, 2);
+
+Permission table values
+
+	("Add"),
+	("Edit"),
+	("Delete"),
+	("Admin");
+
+UserPermission table values - You will need the userIDs from the users table
+
+	(1, "add", "edit", "delete"),
+	(2, "add", "edit", "delete"),
+	(3, "add", "edit", "delete"),
+	(4, "add", "edit", "delete"),
+	(5, "add", "edit", "delete", "admin");
+
+Groups table values
+
+	("WW2 Enthusiasts", "We are interested in finding and cataloging the graves of veterans of World War II.", 2)
+	("Star Search", "We want to find where famous people are buried.", 4);
+
+
+groupMembers table values - You will need the groupID from the groupps table and the userIDs from the users table
+
+	(1, 1, 2, 3),
+	(2, 3, 4, 5);
+
+Messages table values - You will need the userIDs from the users table
+
+	("How are things going? Did you find that grave you were looking for?", 1, 3, "2021-02-05"),
+	("Welcome to the Gravesite", 2, 4, "2021-01-22"),
+	("Things are going very well. I found that grave.", 3, 1, "2021-02-06"),
+	("Thanks. I'm really liking things so far.", 4, 2, "2021-01-22");
+
+
+Post table values - You will need the userIDs from the users table
+
+	(1, "2021-1-25", "Going out to catalog graves in the local cemetery."),
+	(2, "2021-1-26", "Good luck!"),
+	(3, "2021-1-26", "Have fun!"),
+	(4, "2021-5-02", "Are there any admins that can help me with a question?"),
+	(5, "2021-5-28", "Sorry, that I haven't contacted you sooner. What can I do for you?");
+
+Threads table values You will need the userIDs from the users table
+
+	("Weekend Plans", 1, "2021-1-25"),
+	("Site Questions", 4, "2021-5-02");
+
+ThreadPosts table values - You will need the threadID from the threads table and the userID from the users table
+
+	(1, 1, 2, 3),
+	(2, 4, 5);
+
+Wishlist table values - For this table you will need to look up the userID, graveID, and graveyardID
+
+	(1, 5, 5),
+	(2, 4, 4),
+	(3, 2, 2),
+	(4, 3, 3),
+	(5, 1, 1);
