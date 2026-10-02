@@ -1,0 +1,187 @@
+NoSQL (Not only SQL) Instructions
+---------------------------------------------------------------------------------------------------
+
+General Goals
+-------------
+    Create a MongoDB Database within a Docker Container.
+    The database should of course be non-relational (Not only SQL).
+    Documents use a JSON-like syntax for queries.
+
+
+Materials
+---------
+    MongoDB Shell
+    MongoDB Compass
+    Docker Desktop
+
+Installation
+------------
+    https://www.mongodb.com/docs/v7.0/tutorial/install-mongodb-community-with-docker/?msockid=0c8ec4d558cf6c3f3b82d25a59916d72
+
+Mongo Terminal Commands
+-----------------------
+
+    launch terminal?
+        mangosh;
+
+    list all databases?
+        show dbs;
+
+    list all collections?
+        show collections;
+
+    use a database?
+        use database_name;
+
+    build a "document"?
+        document_name = {"key": "Value", "key": "Value", key: 0 };
+        Ex.
+            doc = {"title": "Tacos", "desc": "Yummy tacos", cook_time: 20 };
+    
+    insert a "document" into a database?
+        db.collection_name.insertOne(document_name);
+        Ex.
+            db.tacos.insertOne(doc);
+        Note:
+            Collection doesn't have to exist yet, defining a new one here will create it.
+
+Mongo Terminal Document Queries
+-------------------------------
+
+    find()
+    ------
+    Description: Essentially a SELECT statement. It's aptly named.
+
+        find all "document" contents?
+            db.collection_name.find().pretty();
+
+        find a specific object?
+            db.collection_name.find({"key": "Value"}).pretty();
+            Ex.
+                db.collection_name.find({"title": "Tacos"}).pretty();
+        
+        find objects that meet multiple criteria?
+            db.collection_name.find({"key": "Value"}, {"key2": "Value2"}).pretty();
+
+        find and return only a specific part of an object?
+            db.collection_name.find({"key": "Value"}, {"key": 1}).pretty();
+            Ex.
+                db.collection_name.find({"title": "Tacos"}, {"title": 1}).pretty();
+        
+        find and exclude only a specific part of an object?
+            db.collection_name.find({"key": "Value"}, {"key": 0}).pretty();
+            Ex.
+                db.collection_name.find({"title": "Tacos"}, {"title": 0}).pretty();
+        
+        find and return only a specific part of ALL objects?
+            db.collection_name.find({}, {"key": 1}).pretty();
+        
+        find with wildcard?
+            db.collection_name.find({"key": {$regex: /taco/i }}).pretty();
+            Note.
+                https://www.w3schools.com/js/js_regexp.asp
+        
+        find number of entries?
+            db.collection_name.find().count();
+        
+    limit()
+    -------
+    Description: Limits number of objects returned.
+
+        db.collection_name.find().limit(10);
+    
+    sort()
+    ------
+    Description: Sort by key, in ascending (1) or descending (-1) order.
+
+        db.collection_name.find().sort(Key : 1);
+    
+    skip()
+    ------
+    Description: Skip a set number of entries.
+
+        db.collection_name.find().skip(10);
+
+    Comparison Operators
+    --------------------
+    Description: You can't use the operators as normal, you must use the $ syntax.
+
+        >   $gt
+        >=  $gte
+        <   $lt
+        <=  $lte
+    
+        Ex.
+            db.collection_name.find({cook_time: { $lte : 30}}, {"title": 1}).pretty();
+
+    AND Queries
+    -----------
+    Description: Simply place a comma between additional search criteria.
+
+        db.collection_name.find({"key": "Value"}, {"key2": "Value2"}).pretty();
+
+    OR Queries
+    ----------
+    Description: Add a preface $or before conditional, and packing conditionals into an array.
+
+        db.collection_name.find( $or : [{"key": "Value"}, {"key2": "Value2"}]).pretty();
+
+    Query Arrays
+    ------------
+    Description: Search an array within a document. Put search criteria as the Value in the Key-Value pair in our search.
+
+        db.collection_name.find({"key": "thing_in_array"}).pretty();
+
+        AND
+        ---
+        db.collection_name.find({"key": { $all [ "thing_in_array_1", "thing_in_array_2" ] } } ).pretty();
+
+        OR
+        --
+        db.collection_name.find({"key": { $in [ "thing_in_array_1", "thing_in_array_2" ] } } ).pretty();
+
+        Reach within an Object or an Array
+        ----------------------------------
+        Description: Dot notation.
+
+        db.collection_name.find({"key.inner_key": "value" }).pretty();
+        Ex.
+            db.grades.find({"scores.type" : "exam" }).pretty();
+
+Mongo Terminal Document Update
+-------------------------------
+
+    $set
+    ----
+    Description: Upsert: Update and existing field or even add a new field. 
+        db.collection_name.updateOne({"key": "Value"}, { $set: {"existing_key": "New_Value"}});
+        db.collection_name.updateOne({"key": "Value"}, { $set: {"new_key": "New_Value"}});
+
+    $unset
+    ------
+    Description: Delete a field. 1 for true.
+        db.collection_name.updateOne({"key": "Value"}, { $unset: {"existing_key": 1}});
+    
+    $inc
+    ----
+    Description: Increment or decrement a number by a set amount.
+        db.collection_name.updateOne({"key": "Value"}, { $in: {"existing_key": 1}});
+
+Things that can be stored in a document
+---------------------------------------
+    Strings
+    Integers
+    Arrays
+    Objects
+    Arrays of Objects
+    etc.
+
+Collections
+-----------
+Description: A bit like tables from MySQL. Literal collections of related documents.
+
+    Common syntax for a "sub-collection" is to put a "."
+    Ex.
+        db.collection_name.subcollection_name
+    Note
+        This doesn't really store the data any differently, but can be good organizationally.
